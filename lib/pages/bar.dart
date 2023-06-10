@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:todoapp/pages/Todo/printtodo.dart';
 import 'package:todoapp/pages/categories/addcategories.dart';
+import 'package:todoapp/pages/categories/formpage.dart';
 import 'package:todoapp/pages/profil/profil.dart';
 import 'package:todoapp/pages/profil/users.dart';
 
@@ -11,11 +13,19 @@ import 'Todo/addtodo.dart';
 const _kPages = <String, Widget>{
   'Home': PrintTodo(),
   // 'search': SearchPage(),
-  'Categories': AddCategories(),
+  // ignore: unnecessary_const
+  'Categories': ListPage(),
   'Profil':Profil(),
   // 'statut': StatusPage(),
 };
 
+/*child: Consumer(builder: (context, watch, _) {
+                    final viewModel = watch(viewModelProvider);
+                    return viewModel.buildInputForm();
+                  }),
+                ),
+              ),
+            ],*/
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
