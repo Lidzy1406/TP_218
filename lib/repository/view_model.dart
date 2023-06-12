@@ -16,6 +16,7 @@ final _ref = FirebaseFirestore.instance.collection('catégorie');
     await _ref.add({
       'name': dataModel.name,
       'description': dataModel.description,
+      
     });
     cancel();
   }

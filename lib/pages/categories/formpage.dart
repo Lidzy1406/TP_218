@@ -1,17 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/repository/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FormPage extends ConsumerWidget {
-  const FormPage(
-      {Key? key, required description, required name, required String docId})
-      : super(key: key);
-  
+   const FormPage(/*DocumentReference<Map<String, dynamic>> doc, */
+      {Key? key, required this.docId, required this.name, required this.description, }): super(key: key);
+
+  final String docId;
+  final String name;
+  final String description;
   @override
-  
   Widget build(BuildContext context, WidgetRef ref) {
-    
     final viewModel = ref.watch(viewProvider);
+    final _formKey = GlobalKey<FormState>();
+
     final nameController =
         TextEditingController(text: viewModel.dataModel.name);
     final descriptionController =
@@ -19,7 +22,7 @@ class FormPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulaire'),
+        title: Text('Formulaire Categorie'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -58,4 +61,5 @@ class FormPage extends ConsumerWidget {
       ),
     );
   }
+  
 }

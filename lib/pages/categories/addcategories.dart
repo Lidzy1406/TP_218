@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/repository/category_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/categorie.dart';
+import 'EditPage.dart';
 import 'formpage.dart';
 /*
 /*final addCategorieProvider =
@@ -341,17 +342,29 @@ final descriptionProvider = StateProvider<String>((ref) => '');
 
 class ListPage extends ConsumerWidget {
   const ListPage({Key? key}) : super(key: key);
+  void _navigateToEdit(BuildContext context, String docId, String name,
+      String description) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => EditPage(
+                docId: docId,
+                name: name,
+                description: description,
+              )),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-      AsyncValue<QuerySnapshot> data = ref.watch(dataStream);
+    AsyncValue<QuerySnapshot> data = ref.watch(dataStream);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Catégorie'),
       ),
       body: data.when(
-        data:(QuerySnapshot querySnapshot){
+        data: (QuerySnapshot querySnapshot) {
           final documents = querySnapshot.docs;
 
           return ListView.builder(
@@ -360,34 +373,37 @@ class ListPage extends ConsumerWidget {
               final document = documents[index];
               final name = document.get('name');
               final description = document.get('description');
-              final docId = document.id; 
+              final docId = document.id;
               return ListTile(
-                 title: Text(name),
-              //  subtitle: Text(description),
+                title: Text(name),
+                subtitle: Text(description),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
                       onPressed: () {
+                        _navigateToEdit(context, docId, name, description);
                         // Effectuer une action lorsque l'utilisateur appuie sur le bouton de modification
-                        Navigator.push(
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                 FormPage(docId: docId, name: nameProvider, description: descriptionProvider)),
-                        );
+                                 FormPage( docId:docId, name:name, description:description)),
+                      
+                        );*/
                       },
                       icon: const Icon(Icons.edit),
                     ),
-
-            IconButton(
+                    IconButton(
                       onPressed: () {
                         // Effectuer une action lorsque l'utilisateur appuie sur le bouton de suppression
-                        FirebaseFirestore.instance.collection('catégorie').doc(docId).delete();
-
+                        FirebaseFirestore.instance
+                            .collection('catégorie')
+                            .doc(docId)
+                            .delete();
                       },
                       icon: const Icon(Icons.delete),
-                      color:Colors.red,
+                      color: Colors.red,
                     )
                   ],
                 ),
@@ -402,8 +418,14 @@ class ListPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FormPage(description: null, docId: '', name: null,)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FormPage(
+                        docId: '',
+                        name: '',
+                        description: '',
+                      )));
         },
         child: Icon(Icons.add),
       ),
@@ -411,7 +433,8 @@ class ListPage extends ConsumerWidget {
   }
 }
 
-
-final dataStream = StreamProvider<QuerySnapshot>((ref) =>
-    FirebaseFirestore.instance.collection('catégorie').orderBy('name',
-        descending: true).snapshots());
+final dataStream = StreamProvider<QuerySnapshot>((ref) => FirebaseFirestore
+    .instance
+    .collection('catégorie')
+    .orderBy('name', descending: true)
+    .snapshots());
