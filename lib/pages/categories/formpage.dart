@@ -4,8 +4,13 @@ import 'package:todoapp/repository/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FormPage extends ConsumerWidget {
-   const FormPage(/*DocumentReference<Map<String, dynamic>> doc, */
-      {Key? key, required this.docId, required this.name, required this.description, }): super(key: key);
+  const FormPage(/*DocumentReference<Map<String, dynamic>> doc, */
+      {
+    Key? key,
+    required this.docId,
+    required this.name,
+    required this.description,
+  }) : super(key: key);
 
   final String docId;
   final String name;
@@ -25,7 +30,7 @@ class FormPage extends ConsumerWidget {
         title: Text('Formulaire Categorie'),
       ),
       body: Padding(
-       padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -46,43 +51,42 @@ class FormPage extends ConsumerWidget {
                   ),
                 ],
               ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: 'Nom',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    //  controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nom',
+                    ),
+                    onChanged: viewModel.dataModel.setName,
+                  ),
+                  TextField(
+                    //controller: descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                    ),
+                    onChanged: viewModel.dataModel.setDescription,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: viewModel.saveData,
+                        child: Text('Enregistrer'),
+                      ),
+                      ElevatedButton(
+                        onPressed: viewModel.cancel,
+                        child: Text('Annuler'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              onChanged: viewModel.dataModel.setName,
-            ),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-              ),
-              onChanged: viewModel.dataModel.setDescription,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: viewModel.saveData,
-                  child: Text('Enregistrer'),
-                ),
-                ElevatedButton(
-                  onPressed: viewModel.cancel,
-                  child: Text('Annuler'),
-                ),
-              ],
-            ),
-          ],
-        ),
             ),
           ],
         ),
       ),
     );
   }
-  
 }

@@ -6,19 +6,19 @@ class DataModel extends ChangeNotifier {
   String name = '';
   String description = '';
 
- // String get _name => name;
+  // String get _name => name;
   //String get _description => description;
 
   void setName(String newName) {
     name = newName;
-   // notifyListenersWith('_name');
+    // notifyListenersWith('_name');
     notifyListeners();
   }
 
   void setDescription(String newDescription) {
     description = newDescription;
     //notifyListenersWith('_description');
-  notifyListeners();
+    notifyListeners();
   }
 
   /*void notifyListenersWith(String fieldName) {

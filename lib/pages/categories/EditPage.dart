@@ -33,7 +33,6 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         title: Text('Edit Catégorie'),
       ),
       body: Padding(
@@ -47,74 +46,75 @@ class _EditPageState extends State<EditPage> {
             ),
             SizedBox(height: 16),
             Form(
-              key: _formKey,
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 10,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
+                key: _formKey,
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Enter name',
+                        ),
+                        controller: _nameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a name';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Enter description',
+                        ),
+                        controller: _descriptionController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a description';
+                          }
+                          return null;
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              String name = _nameController.text;
+                              String description = _descriptionController.text;
+                              String docId = widget.docId;
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter name',
-              ),
-              controller: _nameController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a name';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter description',
-              ),
-              controller: _descriptionController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a description';
-                }
-                return null;
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    String name = _nameController.text;
-                    String description = _descriptionController.text;
-                    String docId = widget.docId;
+                              await FirebaseFirestore.instance
+                                  .collection("catégorie")
+                                  .doc(docId)
+                                  .update({
+                                'name': name,
+                                'description': description
+                              });
 
-                    await FirebaseFirestore.instance
-                        .collection("catégorie")
-                        .doc(docId)
-                        .update({'name': name, 'description': description});
-
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Update Data'),
-              ),
-            ),
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text('Update Data'),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ],
         ),
-      )
-            ),
-      ],
       ),
-    ),
     );
   }
 }
