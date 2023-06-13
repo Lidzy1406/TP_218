@@ -25,7 +25,27 @@ class FormPage extends ConsumerWidget {
         title: Text('Formulaire Categorie'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+       padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Remplissez le formulaire ci-dessous:',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -55,6 +75,9 @@ class FormPage extends ConsumerWidget {
                   child: Text('Annuler'),
                 ),
               ],
+            ),
+          ],
+        ),
             ),
           ],
         ),

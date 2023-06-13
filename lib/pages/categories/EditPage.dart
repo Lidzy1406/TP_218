@@ -33,12 +33,36 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Data'),
+        
+        title: Text('Edit Catégorie'),
       ),
-      body: Form(
-        key: _formKey,
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Remplissez le formulaire ci-dessous:',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 16),
+            Form(
+              key: _formKey,
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
               decoration: const InputDecoration(
@@ -87,6 +111,10 @@ class _EditPageState extends State<EditPage> {
           ],
         ),
       )
+            ),
+      ],
+      ),
+    ),
     );
   }
 }

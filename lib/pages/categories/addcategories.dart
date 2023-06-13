@@ -376,7 +376,7 @@ class ListPage extends ConsumerWidget {
               final docId = document.id;
               return ListTile(
                 title: Text(name),
-                subtitle: Text(description),
+                //subtitle: Text(description),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

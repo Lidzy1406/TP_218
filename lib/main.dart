@@ -114,7 +114,8 @@ class MyApp extends ConsumerWidget {
 //       debugShowCheckedModeBanner: false,
 //       title: 'Spin Circle Bottom Bar',
 //       theme: ThemeData(
-//         primarySwatch: Colors.blue,
+//         primarySwatch: Colors.blue,$*
+
 //         visualDensity: VisualDensity.adaptivePlatformDensity,
 //       ),
 //       home: MyHomePage(),
