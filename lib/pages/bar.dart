@@ -1,29 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:todoapp/pages/Todo/printtodo.dart';
 import 'package:todoapp/pages/categories/addcategories.dart';
-import 'package:todoapp/pages/profil/profil.dart';
-import 'package:todoapp/pages/profil/users.dart';
+import 'package:todoapp/pages/profil/profil_screen.dart';
 
 import 'Todo/addtodo.dart';
+import 'Todo/ui/home/home_page.dart';
 
-const _kPages = <String, Widget>{
-  'Home': PrintTodo(),
+ Map<String, Widget> _kPages = <String, Widget>{
+  'Home': HomePage(),
   // 'search': SearchPage(),
-  'Categories': AddCategories(),
-  'Profil':Profil(),
+  'Categories': ListPage(),
+  'Profil':ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
   // 'statut': StatusPage(),
 };
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePages extends StatefulWidget {
+  const HomePages({super.key});
 
   @override
-  _HomePage createState() => _HomePage();
+  _HomePages createState() => _HomePages();
 }
 
-class _HomePage extends State<HomePage> {
+class _HomePages extends State<HomePages> {
   TabStyle _tabStyle = TabStyle.reactCircle;
 
   @override
